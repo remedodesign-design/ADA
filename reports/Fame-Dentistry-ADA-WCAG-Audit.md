@@ -54,6 +54,19 @@ Live scan of `https://www.famedentistry.co.uk/home-v2` (axe-core + WAVE-style DO
 - `Footer new` component (`275904d5-ad88-c63b-78e0-299d97ff71bd`, 20 pages): newsletter email input `aria-label="Email address for newsletter"`, `autocomplete="email"`, and DOM id changed `Email` → `newsletter-email` (removes the duplicate id with the enquiry form).
 - Read-back via the Webflow MCP confirmed the values. **Webflow can silently drop attributes on component-nested elements at publish time, so these must be verified on the live HTML after publishing.**
 
+**Contrast fixes (approved 2026-10-12, saved in Designer, NOT yet published)** — colour changes only:
+
+| Style | Before | After | Ratio | Scope |
+|---|---|---|---|---|
+| `text-light` (grey caption on navy) | `rgba(248,246,242,.32)` ≈ `#616670` | `#C2C7D1` | 2.75 → 9.4:1 | global; only ever on navy |
+| `Testimonial-type-block` | `#C9A96E` on white | `#856421` | 2.23 → 5.5:1 | global; only on white |
+| `Text Block 5` ("Video Testimonial") | gold variable `#BD9242` on white | `#856421` | 2.85 → 5.5:1 | one element |
+| `Form-label` | `#737373` on cream | `#666666` | 4.39 → 5.4:1 | global |
+| `button-primary:hover` background | `#C9A96E` (white text) | `#8A6824` (white text) | 2.24 → 5.14:1 | global (option B) |
+| NPS Rating tag (`People-tag`) | `#7D5E17` on navy | new combo `People-tag.tag-on-navy` = `#C9A96E` | 2.63 → 7.1:1 | that one element only; `People-tag` unchanged elsewhere (it passes on light backgrounds) |
+
+**Deliberately not changed:** `section-meta-3/4`. They only fail on the current Home (out of scope), and `section-meta-4` is also used on navy, where a darker bronze would fail. Fix needs a combo class on that page's elements.
+
 ## 000. FIX LOG (2026-10-12) — saved in the Designer, **NOT yet published**
 
 Home page (`6a19a7f335bfcfdf2567bbd4`) only. No visual change by design. Read back via the Webflow MCP after each write (API read-back only; **not yet verified on the live HTML or by re-running WAVE**).

@@ -49,6 +49,11 @@ Live scan of `https://www.famedentistry.co.uk/home-v2` (axe-core + WAVE-style DO
 | 5 | No `<main>`, `<header>`, `<footer>` landmarks. `#main-content` is only the hero div, so retagging it `main` would be wrong | page structure + shared components | Not changed: needs content wrapped in a `main` (Designer) |
 | 6 | Colour contrast, 10 axe nodes: gold `#BD9242`/`#C9A96E` on white, `#616670` on navy (`.text-light`, `.case`), `#7D5E17` on navy (`.people-tag`) | **global classes** | Not changed: edits would apply sitewide and need colour approval |
 
+**Shared-component fixes (approved 2026-10-12, saved in Designer, NOT yet published):**
+- `Enquiry Form` component (`22531e8b-e222-bfa7-c9b2-747b16cdefb8`, 19 pages): `aria-label` + `autocomplete` on Name, Email, Phone; `aria-label` on Message.
+- `Footer new` component (`275904d5-ad88-c63b-78e0-299d97ff71bd`, 20 pages): newsletter email input `aria-label="Email address for newsletter"`, `autocomplete="email"`, and DOM id changed `Email` → `newsletter-email` (removes the duplicate id with the enquiry form).
+- Read-back via the Webflow MCP confirmed the values. **Webflow can silently drop attributes on component-nested elements at publish time, so these must be verified on the live HTML after publishing.**
+
 ## 000. FIX LOG (2026-10-12) — saved in the Designer, **NOT yet published**
 
 Home page (`6a19a7f335bfcfdf2567bbd4`) only. No visual change by design. Read back via the Webflow MCP after each write (API read-back only; **not yet verified on the live HTML or by re-running WAVE**).

@@ -36,6 +36,19 @@ WAVE on `https://fame-dentistry.webflow.io/` (screenshots supplied by the client
 
 ---
 
+## 0000. HOME-V2 (`/home-v2`, page `6a8aea0bef4915729a2ec633`) — scope changed 2026-10-12: current Home is out of scope
+
+Live scan of `https://www.famedentistry.co.uk/home-v2` (axe-core + WAVE-style DOM checks): lang OK, 1 h1, no heading skips, no missing alt, no empty headings, skip link target exists (`#main-content`).
+
+| # | Issue | Where | Status |
+|---|---|---|---|
+| 1 | Close button has no accessible name (`a.cross-btn`, empty link) | page-level | **Fixed, saved, not published**: `aria-label="Close"` |
+| 2 | Lightbox link name does not contain its visible text ("Richard's story · Watch") | page-level | **Fixed, saved, not published**: `aria-label="Richard's story · Watch"` (axe flagged only this lightbox; Webflow's lightbox script may override it, so re-check live) |
+| 3 | 4 enquiry-form fields + footer email field have no label | **shared components** `Enquiry Form` (19 pages), `Footer new` (20 pages) | Not changed (outside Home-v2 scope; needs your OK) |
+| 4 | Duplicate id `Email` (enquiry form and footer form) | shared components | Not changed, same reason |
+| 5 | No `<main>`, `<header>`, `<footer>` landmarks. `#main-content` is only the hero div, so retagging it `main` would be wrong | page structure + shared components | Not changed: needs content wrapped in a `main` (Designer) |
+| 6 | Colour contrast, 10 axe nodes: gold `#BD9242`/`#C9A96E` on white, `#616670` on navy (`.text-light`, `.case`), `#7D5E17` on navy (`.people-tag`) | **global classes** | Not changed: edits would apply sitewide and need colour approval |
+
 ## 000. FIX LOG (2026-10-12) — saved in the Designer, **NOT yet published**
 
 Home page (`6a19a7f335bfcfdf2567bbd4`) only. No visual change by design. Read back via the Webflow MCP after each write (API read-back only; **not yet verified on the live HTML or by re-running WAVE**).

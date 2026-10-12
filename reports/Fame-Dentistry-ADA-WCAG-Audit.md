@@ -67,6 +67,20 @@ Live scan of `https://www.famedentistry.co.uk/home-v2` (axe-core + WAVE-style DO
 
 **Deliberately not changed:** `section-meta-3/4`. They only fail on the current Home (out of scope), and `section-meta-4` is also used on navy, where a darker bronze would fail. Fix needs a combo class on that page's elements.
 
+### Home-v2 WAVE run (webflow.io/home-v2): 9 errors · 363 contrast · 15 alerts · AIM 1.6 — follow-up fixes (saved, NOT yet published)
+
+**Root cause of the 363 contrast errors:** every letter of the small gold uppercase labels is its own `span.char` inside `.typewriter` (letter-by-letter reveal), so WAVE counts one error per letter. The colour comes from the global `.typewriter` style (gold `#BD9242`, 2.2–2.65:1 on the cream/beige backgrounds).
+
+| Fix | Detail |
+|---|---|
+| `typewriter` colour → `#7A5B1D` | 4.8–6.3:1 on every beige/white background it sits on (darkest `#E8E0D0` = 4.79:1) |
+| New combo `typewriter.typewriter-on-dark` = `#C9A96E` | applied to the only navy-background label ("The enquiry process", Concierge page, element `ccd9ccd4-5d7e-ef83-15c5-dadc2ba60e6d`) so it stays gold (7.1:1) |
+| Very small text (6 alerts) | `text-light` and `Testimonial-type-block` font-size 10px → 12px |
+| Long alt text (1 alert) | hero image alt shortened from 125 characters to "Glasgow skyline at sunrise over the River Clyde" |
+| Suspicious link text (1 alert) | the two "Read more →" links on the founder cards now have `aria-label` "Read more about Dr Ferhan Ahmed" / "…Dr Tariq Bashir" |
+
+**Left alone:** Noscript element (the Google Tag Manager noscript iframe, standard and harmless); Redundant links (6): these are header/footer links that repeat body links to the same pages (nav/footer components, intentional); and the 9 "missing alt" errors are still under investigation (live DOM shows `alt=""` on 17 decorative images; WAVE may be treating some as needing text).
+
 ## 000. FIX LOG (2026-10-12) — saved in the Designer, **NOT yet published**
 
 Home page (`6a19a7f335bfcfdf2567bbd4`) only. No visual change by design. Read back via the Webflow MCP after each write (API read-back only; **not yet verified on the live HTML or by re-running WAVE**).

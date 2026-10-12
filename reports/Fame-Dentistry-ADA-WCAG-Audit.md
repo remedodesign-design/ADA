@@ -7,6 +7,35 @@
 
 ---
 
+## 00. UPDATE: WAVE results for the homepage (supersedes my estimates below)
+
+WAVE on `https://fame-dentistry.webflow.io/` (screenshots supplied by the client team): **5 Errors · 31 Contrast Errors · 2 Alerts · 10 Features · 5 Structure · 7 ARIA · AIM 3.7/10.** (WAVE's AIM score is its own calculation; it does not match the simple formula in the audit skill, so use WAVE's figure.)
+
+| WAVE result | Verdict vs. my static audit |
+|---|---|
+| **4 × Missing form label** (name, email, phone, message in the enquiry form) | **Confirmed (E1).** Top priority. |
+| **1 × Missing alternative text** (icon beside the "Select Treatment" dropdown) | **Confirmed in part (E3).** On Home it is the dropdown icon only. The tick/address/phone icons I listed were not flagged here (hidden success state or not on this page); re-check on other pages. |
+| **31 × Very low contrast** | **I underestimated this badly** (I guessed 3–8). It is the largest issue. Visible in the screenshots: gold text on cream — "NOW OPEN · SCOTLAND STREET · GLASGOW", "REPLY FROM A REAL PERSON", the footer headings ADDRESS / NEED CARE NOW? / FOR DENTISTS / CONTACT, and the credential/pull-quote text. This is my **C5**, now confirmed and widespread. |
+| **2 × Alerts** (one is "Redundant link") | Redundant link matches **A7**. My other alerts (no landmarks, form status, etc.) were not flagged by WAVE; they remain best-practice gaps, not WAVE alerts. |
+| **7 × ARIA** (e.g. `aria-current="page"`) | **My statement "no ARIA found" was wrong.** Webflow adds `aria-current` automatically; my queries only looked for `aria-label`/`role`/`tabindex`. |
+| `lang="en"` detected, logo alt present, h1/h2 present | Good (Features). |
+
+**Corrections to my earlier estimates**
+- Errors: I estimated 10–16; WAVE found **5**. Items **E2, E4, E5, E6, E7** (footer newsletter label, empty mobile CTA, social links, nav links, skip-link target) were **not flagged on Home**. The Home page uses its own navbar and the older `Footer` component, not `nav-bar-new` / `Footer new`, so those items are **unverified** and only apply to the ~20 pages that use the newer components. Treat them as "check on those pages".
+- Contrast: **31, not 3–8.** The count is many instances of a few classes, so a small number of style changes should clear most of it.
+- The old `Footer` component (1 instance, used on Home) was **not** in my audit; its gold-on-cream headings are among the contrast failures.
+- One group of contrast markers sits on every word of a navy pull-quote ("…of our implant patients and the advanced dental work we are referred to us by other dentists."). That pattern suggests a word-by-word reveal animation (partial opacity) is being read as low contrast. Verify with the WAVE **Contrast** tab before changing colours.
+
+**Gold text contrast (computed).** Brand gold `#C9A96E` is **2.07:1 on cream (#F8F6F2) and 2.24:1 on white**; it needs 4.5:1 for body-size text. Gold is fine on navy (7.1:1) and as a decorative border. Candidate darker text-only gold: `#8A6D2F` = 4.51:1 on cream / 4.87:1 on white (borderline), `#85692A` = 4.8:1 / 5.18:1 (comfortable), `#7A5F24` = 5.57:1 / 6.02:1. Recommended approach: add one darker "gold-text" shade used **only for text on light backgrounds**, and leave the existing gold for borders, buttons and text on navy. This is a colour change and **needs your approval** (Phase 3).
+
+**Revised priority order**
+1. **Contrast (31):** gold text on light backgrounds — highest count, few classes to change, needs colour approval.
+2. **Form labels (4 on Home; same component on 19 pages)** and the dropdown icon alt text.
+3. Redundant link on Home.
+4. Then the "unverified" component items on the ~20 pages using `nav-bar-new` / `Footer new`, and the best-practice gaps (landmarks, live-region form status, email `type`/autocomplete).
+
+---
+
 ## 0. How this audit was done (read first)
 
 | Item | Detail |

@@ -36,6 +36,25 @@ WAVE on `https://fame-dentistry.webflow.io/` (screenshots supplied by the client
 
 ---
 
+## 000. FIX LOG (2026-10-12) — saved in the Designer, **NOT yet published**
+
+Home page (`6a19a7f335bfcfdf2567bbd4`) only. No visual change by design. Read back via the Webflow MCP after each write (API read-back only; **not yet verified on the live HTML or by re-running WAVE**).
+
+| # | WAVE item | Fix applied | Read-back |
+|---|---|---|---|
+| 1 | Missing form label ×4 | Added `aria-label` to Name ("Your name"), Email ("Email address"), Phone ("Phone number"), Message ("Anything else? (optional)") — each equals the visible label text. Also added `autocomplete` = `name` / `email` / `tel` (WCAG 1.3.5). | ✅ attributes present on all 4 elements |
+| 2 | Missing alternative text ×1 | Dropdown arrow `<img class="arrow">` in the HTML embed (`43a85220-9feb-e333-8f55-853507131545`) now has `alt=""` and `aria-hidden="true"`. No other embed code changed. | ✅ embed code read back with the change |
+
+**Not changed / still open**
+- Redundant link (WAVE alert): two `For Dentists` links to the same page (`7dbe0a6b…`, `6aaf3856…`). Probably desktop and mobile copies; removing one could break a breakpoint, so left for a decision.
+- **Custom "Select Treatment" dropdown is mouse-only** (div-based, click handlers only, no `tabindex`/role/keyboard handling) — a real WCAG 2.1.1 keyboard failure WAVE does not flag. Fixing it means editing the embed JavaScript; not done yet.
+- Same fixes still to do in the shared `Enquiry Form` component (19 pages) and the dropdown embed copy there.
+- Contrast (31 errors): awaiting colour approval.
+- Embed CSS contains an invalid rule (`background: #rgb(231 224 212)` on `.select-list:hover`), so the hover colour never applies. Not an accessibility error; noted only.
+- **Publishing:** pending. A site publish also pushes any other unpublished edits.
+
+---
+
 ## 0. How this audit was done (read first)
 
 | Item | Detail |

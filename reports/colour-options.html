@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fame Dentistry – contrast colour options</title>
+<style>
+:root{--navy:#1a2233;--cream:#f8f6f2;--ink:#1a2233}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:#eceae5;color:var(--ink);padding:24px 16px 48px}
+main{max-width:980px;margin:0 auto}
+h1{font-size:22px;margin:0 0 4px} h2{font-size:17px;margin:32px 0 4px} p.note{margin:0 0 14px;color:#4a4f5c;font-size:14px;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.card{border-radius:10px;overflow:hidden;border:1px solid #d6d2c8;background:#fff}
+.card .hd{padding:10px 12px;font-size:12px;font-weight:600;background:#fff;border-bottom:1px solid #e4e0d6;display:flex;justify-content:space-between;gap:8px}
+.pass{color:#0a6b2f}.fail{color:#a4161a}
+.on-cream{background:var(--cream);padding:14px 12px}
+.on-white{background:#fff;padding:14px 12px;border-top:1px dashed #e4e0d6}
+.on-navy{background:var(--navy);padding:14px 12px}
+.lbl{font-size:14px;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+.sub{font-size:12px;margin-top:6px;opacity:.9}
+code{font-family:ui-monospace,monospace;font-size:12px}
+.rec{outline:3px solid #0a6b2f;outline-offset:-3px}
+.tag{font-size:11px;background:#0a6b2f;color:#fff;border-radius:99px;padding:2px 8px;white-space:nowrap}
+table{border-collapse:collapse;width:100%;background:#fff;border-radius:10px;overflow:hidden;font-size:13px}
+td,th{padding:8px 10px;border-bottom:1px solid #e4e0d6;text-align:left}
+</style></head><body><main>
+<h1>Contrast colour options</h1>
+<p class="note">WCAG AA needs <b>4.5:1</b> for text this size. Only <b>text</b> colours change. Gold borders, buttons, and gold on navy stay exactly as they are. Ratios are computed. Backgrounds: cream <code>#F8F6F2</code>, white <code>#FFFFFF</code>, navy <code>#1A2233</code>.</p>
+
+<h2>1 · Gold text on light backgrounds (the biggest group)</h2>
+<p class="note">Used for small uppercase labels, e.g. the section label above the heading, the footer column headings, testimonial tags. Today: <code>#BD9242</code> (2.65:1 on cream) and <code>#C9A96E</code> (2.23:1 on white).</p>
+<div class="grid" id="gold"></div>
+
+<h2>2 · Grey text on navy</h2>
+<p class="note">Small captions in dark sections (<code>.text-light</code>, <code>.case</code>). Today: <code>#616670</code> on navy = 2.75:1.</p>
+<div class="grid" id="grey"></div>
+
+<h2>3 · Bronze label on navy (<code>.people-tag</code>)</h2>
+<p class="note">Today this uses dark bronze <code>#7D5E17</code> on navy = 2.63:1. The simplest fix needs no new colour: use the existing brand gold <code>#C9A96E</code> (7.1:1 on navy).</p>
+<div class="grid" id="tag"></div>
+
+<h2>4 · Button hover (white text on gold)</h2>
+<p class="note">Today: white on <code>#C9A96E</code> = 2.24:1. Two ways to pass:</p>
+<div class="grid" id="btn"></div>
+
+<h2>Recommendation</h2>
+<table><tr><th>Where</th><th>Change</th><th>Ratio</th></tr>
+<tr><td>Gold text on light</td><td><code>#856421</code></td><td>5.06 / 5.47</td></tr>
+<tr><td>Grey text on navy</td><td><code>#939AAA</code></td><td>5.64</td></tr>
+<tr><td>Bronze label on navy</td><td>existing gold <code>#C9A96E</code></td><td>7.11</td></tr>
+<tr><td>Button hover</td><td>keep gold background, navy text</td><td>7.11</td></tr></table>
+<script>
+function lum(h){const c=[1,3,5].map(i=>parseInt(h.substr(i,2),16)/255).map(v=>v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4));return .2126*c[0]+.7152*c[1]+.0722*c[2]}
+function cr(a,b){let x=lum(a),y=lum(b);if(x<y)[x,y]=[y,x];return (x+.05)/(y+.05)}
+const f=n=>n.toFixed(2)+':1';
+const badge=n=>`<span class="${n>=4.5?'pass':'fail'}">${f(n)} ${n>=4.5?'✓ AA':'✗ fails'}</span>`;
+function card(el,title,body,rec){const d=document.createElement('div');d.className='card'+(rec?' rec':'');d.innerHTML=`<div class="hd"><span>${title}</span>${rec?'<span class="tag">suggested</span>':''}</div>${body}`;document.getElementById(el).appendChild(d)}
+[['#BD9242','Current (label)'],['#C9A96E','Current (tag)'],['#8F6D28','#8F6D28'],['#8A6824','#8A6824'],['#856421','#856421'],['#7F5F1F','#7F5F1F']].forEach(([c,t],i)=>{
+ const rec=c==='#856421', cur=i<2;
+ card('gold',t+(cur?'':''),`<div class="on-cream"><div class="lbl" style="color:${c}">Address</div><div class="sub">cream · ${badge(cr(c,'#f8f6f2'))}</div></div><div class="on-white"><div class="lbl" style="color:${c}">Need care now?</div><div class="sub">white · ${badge(cr(c,'#ffffff'))}</div></div>`,rec)});
+[['#616670','Current'],['#8A92A3','#8A92A3'],['#939AAA','#939AAA'],['#9AA1B0','#9AA1B0'],['#A3A9B7','#A3A9B7']].forEach(([c,t])=>{
+ card('grey',t,`<div class="on-navy"><div class="lbl" style="color:${c};font-size:13px">Case · Implant</div><div class="sub" style="color:${c}">navy · ${badge(cr(c,'#1a2233')).replace(/class="(pass|fail)"/,'style="color:#fff"')}</div></div>`,c==='#939AAA')});
+[['#7D5E17','Current'],['#C9A96E','Brand gold']].forEach(([c,t])=>{
+ card('tag',t,`<div class="on-navy"><div class="lbl" style="color:${c};font-size:13px">Founder</div><div class="sub" style="color:#fff">navy · ${f(cr(c,'#1a2233'))} ${cr(c,'#1a2233')>=4.5?'✓ AA':'✗ fails'}</div></div>`,c==='#C9A96E')});
+function btn(bg,fg,t,rec){card('btn',t,`<div class="on-cream" style="display:flex;justify-content:center"><div style="background:${bg};color:${fg};border:1px solid #c9a96e;padding:14px 26px;font-weight:600;letter-spacing:.14em;font-size:13px;text-transform:uppercase">Enquire now</div></div><div class="sub" style="padding:8px 12px">${badge(cr(fg,bg))}</div>`,rec)}
+btn('#c9a96e','#ffffff','Current hover',false);
+btn('#c9a96e','#1a2233','A · gold bg, navy text',true);
+btn('#8a6824','#ffffff','B · darker gold bg, white text',false);
+</script></main></body></html>

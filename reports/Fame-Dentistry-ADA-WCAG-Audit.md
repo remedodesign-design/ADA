@@ -67,6 +67,24 @@ Live scan of `https://www.famedentistry.co.uk/home-v2` (axe-core + WAVE-style DO
 
 **Deliberately not changed:** `section-meta-3/4`. They only fail on the current Home (out of scope), and `section-meta-4` is also used on navy, where a darker bronze would fail. Fix needs a combo class on that page's elements.
 
+### PUBLISHED 2026-10-12 (webflow.io + famedentistry.co.uk + www) — live verification of `/home-v2`
+
+Live scan (axe-core A/AA + best-practice, WAVE-style DOM checks, headless Chromium, custom domain):
+
+| Check | Before | After |
+|---|---|---|
+| axe colour-contrast violations | 10 nodes | **0** |
+| Form controls without a label | 5 | **0** |
+| Images without `alt` / empty links / empty buttons / duplicate ids | 1 / 1 / 0 / 1 | **0 / 0 / 0 / 0** |
+| axe `region` (no `<main>`/`<header>`/`<footer>` landmarks) | 40 | 40 — **left as is by decision** |
+| Attributes inside shared components (labels, `newsletter-email` id) | pending | **survived publish (verified in live HTML)** |
+
+**Keyboard-accessible "Select Treatment" dropdown (shared `Enquiry Form` component embed, approved):** a separate script was appended (existing code untouched) adding `role=combobox/listbox/option`, `aria-expanded`, Tab focus, Enter/Space/Arrow/Home/End/Escape, and a keyboard-only focus ring. Tested in headless Chromium before publishing and again live: keyboard open/choose/Escape/Tab, mouse still works, hidden form value updates, axe clean on the control.
+
+**Unpublished since (saved only):** form success/error message colours — footer newsletter success and error messages now `#1A2233` text (class `msg-dark-text`; was `#9C968A` on `#DDD`/`#FFDEDE` = ~2.2:1), enquiry confirmation phone link `#7A5B1D` (class `text-link.msg-link-dark`; was gold `#C9A96E` on beige 1.83:1).
+
+**Not changed, to verify manually:** white heading/paragraph in the enquiry panel sit over a photo overlay (contrast tools measure the wrong background); mobile-only "Enquire Now" button on a gradient; GTM noscript; 6 "redundant link" alerts (header/footer links repeating body links).
+
 ### Home-v2 WAVE run (webflow.io/home-v2): 9 errors · 363 contrast · 15 alerts · AIM 1.6 — follow-up fixes (saved, NOT yet published)
 
 **Root cause of the 363 contrast errors:** every letter of the small gold uppercase labels is its own `span.char` inside `.typewriter` (letter-by-letter reveal), so WAVE counts one error per letter. The colour comes from the global `.typewriter` style (gold `#BD9242`, 2.2–2.65:1 on the cream/beige backgrounds).

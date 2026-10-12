@@ -53,6 +53,19 @@ Home page (`6a19a7f335bfcfdf2567bbd4`) only. No visual change by design. Read ba
 - Embed CSS contains an invalid rule (`background: #rgb(231 224 212)` on `.select-list:hover`), so the hover colour never applies. Not an accessibility error; noted only.
 - **Publishing:** pending. A site publish also pushes any other unpublished edits.
 
+### Live verification (2026-10-12, after publish) — `https://www.famedentistry.co.uk/`
+
+Published at 10:37 UTC to the webflow.io subdomain and both custom domains. The live HTML was fetched and scanned with axe-core (WCAG 2.0/2.1 A+AA rules) in headless Chromium. (WAVE itself was not re-run by me.)
+
+| Check | Live result |
+|---|---|
+| 4 form fields | ✅ `aria-label` "Your name" / "Email address" / "Phone number" / "Anything else? (optional)" and `autocomplete` name/email/tel are in the live markup |
+| Dropdown arrow image | ✅ live `<img class="arrow" … alt="" aria-hidden="true">` |
+| axe: label / alt / ARIA / link / heading / landmark rules | ✅ **0 violations** |
+| axe: colour contrast | ❌ **5 nodes**, all `#bd9242` gold text on `#f8f6f2` cream = **2.64:1** (needs 4.5:1): `.section-meta-3` and the four `.section-meta-4` footer headings |
+
+**Correction to my earlier contrast numbers:** the gold text on cream is actually `#BD9242` (2.65:1), not `#C9A96E`. Darker text-only candidates against cream `#F8F6F2`: `#8A6824` = 4.76:1, `#856421` = 5.06:1, `#7F5F1F` = 5.47:1 (all pass 4.5:1). axe counts 5 nodes where WAVE counts 31, because axe skips elements it cannot measure reliably (e.g. animated or overlapping text). The contrast classes to change are `section-meta-3` / `section-meta-4` and other uses of `#BD9242` text on light backgrounds.
+
 ---
 
 ## 0. How this audit was done (read first)
